@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mdm Jiii Ultra Ultra Deluxe</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:linear-gradient(135deg,#0b1026,#25114f);color:#fff;overflow:hidden}
+.page{display:none;height:100vh;justify-content:center;align-items:center;flex-direction:column;padding:20px;text-align:center}
+.active{display:flex}
+.glass{background:rgba(255,255,255,.08);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.15);border-radius:30px;padding:25px;width:min(92%,900px)}
+button{padding:12px 22px;border:none;border-radius:25px;cursor:pointer}
+h1{font-size:3rem;text-shadow:0 0 15px #fff,0 0 30px #ff66cc}
+#meter{font-size:90px;font-weight:bold}
+.bar{width:90%;height:18px;background:#333;border-radius:20px;margin:auto;overflow:hidden}
+.fill{height:100%;width:0;background:linear-gradient(90deg,#ff4d9d,#7b68ee)}
+.flip{width:240px;height:150px;perspective:1000px;margin:10px}
+.inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:.8s}
+.flip.open .inner{transform:rotateY(180deg)}
+.face{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:20px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.15);padding:10px}
+.back{transform:rotateY(180deg)}
+.grid{display:flex;flex-wrap:wrap;justify-content:center}
+.reason{background:rgba(255,255,255,.12);padding:10px;margin:8px;border-radius:12px;text-align:left}
+#reasons{max-height:55vh;overflow:auto}
+.fire{position:fixed;font-size:22px;animation:boom 2s linear forwards}
+@keyframes boom{from{opacity:1;transform:scale(.2)}to{opacity:0;transform:scale(5)}}
+.shake{animation:shake .5s}
+@keyframes shake{25%{transform:translateX(6px)}50%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+</style>
+</head>
+<body>
+
+<div id="p1" class="page active"><div class="glass">
+<h1>🎂 Happy Birthday Mdm Jiii</h1>
+<p>Ultra Ultra Deluxe Birthday Experience ✨</p><br>
+<button onclick="show(2)">Start Surprise</button>
+</div></div>
+
+<div id="p2" class="page"><div class="glass">
+<h2>❤️ Love Percentage ❤️</h2>
+<div id="meter">0%</div>
+<div class="bar"><div class="fill" id="fill"></div></div><br>
+<p id="status">Calculating...</p>
+<button onclick="startMeter()">Start Love Analysis</button>
+</div></div>
+
+<div id="p3" class="page"><div class="glass">
+<h2>🎁 Secret Gift Vault</h2>
+<div id="gifts" class="grid"></div>
+<button onclick="show(4)">Next</button>
+</div></div>
+
+<div id="p4" class="page"><div class="glass">
+<h2>🎂 Cake Ceremony</h2>
+<div style="font-size:130px;cursor:pointer" onclick="cake()">🎂</div>
+<p>Tap Cake To Celebrate</p>
+<button onclick="show(5)">Next</button>
+</div></div>
+
+<div id="p5" class="page"><div class="glass">
+<h2>💖 100 Things</h2>
+<div id="reasons"></div>
+<button onclick="show(6)">Next</button>
+</div></div>
+
+<div id="p6" class="page"><div class="glass">
+<h2>💌 Letter</h2>
+<p id="letter"></p>
+<button onclick="show(7)">Final Surprise</button>
+</div></div>
+
+<div id="p7" class="page"><div class="glass">
+<h1>HAPPY BIRTHDAY MDM JIII</h1>
+<p>May your smile never fade and your dreams always come true ✨</p>
+</div></div>
+
+<script>
+function show(n){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById('p'+n).classList.add('active');
+if(n===7){fireworks(120);}
+}
+
+function fireworks(count){
+for(let i=0;i<count;i++){
+let f=document.createElement('div');
+f.className='fire';
+f.innerHTML=['✨','🎆','🎇'][Math.floor(Math.random()*3)];
+f.style.left=Math.random()*100+'vw';
+f.style.top=Math.random()*100+'vh';
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),2000);
+}
+}
+
+function startMeter(){
+const seq=[0,10,25,50,75,100,101,150,250,500,1000,10000];
+let i=0;
+let m=document.getElementById('meter');
+let fill=document.getElementById('fill');
+let status=document.getElementById('status');
+
+function step(){
+ if(i<seq.length){
+   m.innerHTML=seq[i]+'%';
+   fill.style.width=Math.min(seq[i],100)+'%';
+   if(seq[i]>100){ status.innerHTML='⚡ Overloaded...'; }
+   i++;
+   setTimeout(step,600);
+ }else{
+   m.innerHTML='♾️';
+   status.innerHTML='♾️ Infinity Reached';
+   fireworks(80);
+
+   setTimeout(()=>{
+      status.innerHTML='Result:<br><br>♾️ INFINITE';
+      setTimeout(()=>{
+         status.innerHTML += '<br><br>❤️ Mdm Jiii Love Analysis Complete ❤️';
+         fireworks(120);
+         setTimeout(()=>show(3),2500);
+      },1200);
+   },1200);
+ }
+}
+step();
+}
+
+const gifts=["🌷 Your smile is beautiful","✨ May your dreams come true","💖 You are special","🌈 Stay happy always","🌟 Keep shining","🎂 Happy Birthday Mdm Jiii"];
+gifts.forEach((g,i)=>{
+let d=document.createElement('div');
+d.className='flip';
+d.innerHTML='<div class="inner"><div class="face">🎁 Gift '+(i+1)+'</div><div class="face back">'+g+'</div></div>';
+d.onclick=()=>d.classList.toggle('open');
+document.getElementById('gifts').appendChild(d);
+});
+
+function cake(){
+fireworks(150);
+alert('🎉 Cake Cut Successfully! Happy Birthday Mdm Jiii');
+}
+
+const reasons=[
+"Because your smile can brighten a day.",
+"Because you have a kind heart.",
+"Because you make people feel comfortable.",
+"Because your happiness matters.",
+"Because you deserve good things.",
+"Because your positivity is inspiring.",
+"Because your laugh is precious.",
+"Because you are unique.",
+"Because you spread good vibes.",
+"Because your presence is special.",
+"Because you make memories better.",
+"Because you stay true to yourself.",
+"Because you are thoughtful.",
+"Because you are caring.",
+"Because you make ordinary moments special.",
+"Because your confidence is inspiring.",
+"Because your energy is amazing.",
+"Because you make people smile.",
+"Because you are strong.",
+"Because you are genuine.",
+"Because you are memorable.",
+"Because you have a beautiful personality.",
+"Because your kindness stands out.",
+"Because you make conversations enjoyable.",
+"Because you are creative.",
+"Because you are supportive.",
+"Because you make life brighter.",
+"Because your smile is priceless.",
+"Because you never stop growing.",
+"Because you are one of a kind.",
+"Because you are appreciated.",
+"Because you are respected.",
+"Because you deserve happiness.",
+"Because you make a difference.",
+"Because you are talented.",
+"Because you are inspiring.",
+"Because you are cheerful.",
+"Because you are fun to be around.",
+"Because your presence feels comforting.",
+"Because you make people feel valued.",
+"Because you are thoughtful.",
+"Because you are wonderful.",
+"Because you make days better.",
+"Because your positivity is contagious.",
+"Because you are naturally special.",
+"Because you have a good heart.",
+"Because you make people happy.",
+"Because your smile is unforgettable.",
+"Because you are amazing in your own way.",
+"Because you deserve the best.",
+"Because today is your special day.",
+"Because your dreams matter.",
+"Because you make life more colorful.",
+"Because your happiness is important.",
+"Because you are appreciated more than you know.",
+"Because you have a beautiful spirit.",
+"Because you are inspiring without trying.",
+"Because your kindness leaves an impact.",
+"Because you make people feel welcome.",
+"Because you are full of potential.",
+"Because you are unforgettable.",
+"Because you are bright and positive.",
+"Because you are genuine and honest.",
+"Because you make the world a little better.",
+"Because your smile lights up faces.",
+"Because you deserve success.",
+"Because you deserve peace.",
+"Because you deserve joy.",
+"Because you deserve love and respect.",
+"Because you bring warmth to others.",
+"Because you are a beautiful soul.",
+"Because you make people feel heard.",
+"Because you are strong even on hard days.",
+"Because you are confident.",
+"Because you are brave.",
+"Because you make every moment better.",
+"Because you are thoughtful and caring.",
+"Because your personality shines.",
+"Because you make birthdays more special.",
+"Because your smile is contagious.",
+"Because you are appreciated today and always.",
+"Because you have a wonderful future ahead.",
+"Because your presence matters.",
+"Because you inspire positivity.",
+"Because you make people comfortable.",
+"Because you are a blessing to many.",
+"Because you are naturally kind.",
+"Because you make happy memories.",
+"Because your heart is beautiful.",
+"Because you deserve endless smiles.",
+"Because you make people feel important.",
+"Because you are special in countless ways.",
+"Because you are worth celebrating.",
+"Because you make life brighter.",
+"Because you deserve every happiness.",
+"Because your smile is a gift.",
+"Because you are truly wonderful.",
+"Because today is all about you.",
+"Because you deserve a fantastic year ahead.",
+"Because Happy Birthday, Mdm Jiii ❤️"
+];
+let idx=0;
+function typeReason(){
+if(idx>=reasons.length)return;
+let d=document.createElement('div');
+d.className='reason';
+document.getElementById('reasons').appendChild(d);
+let t=reasons[idx],c=0;
+(function w(){
+if(c<t.length){d.innerHTML+=t[c++];setTimeout(w,18);}
+else{idx++;setTimeout(typeReason,80);}
+})();
+}
+typeReason();
+
+let letter="Dear Mdm Jiii, Happy Birthday! Wishing you happiness, success and endless smiles. May this year be full of beautiful memories and wonderful moments. ❤️";
+let i=0;(function type(){if(i<letter.length){document.getElementById('letter').innerHTML+=letter[i++];setTimeout(type,30);}})();
+</script>
+</body>
+</html>
